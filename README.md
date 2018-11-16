@@ -74,10 +74,11 @@ order:
 ```
 Por lo que se accederá a los mismos con el prefijo `/order/`
 
-### WORKFLOW DE LA APLICACIÓN
+## WORKFLOW DE LA APLICACIÓN
 
 Para probar toda la funcionalidad desarrollada haria que seguir los siguintes pasos:
-
+### Consumir una API:
+En este apartado, habrá que solicitar un listado de eventos a una API y permitir que el usuario seleccione las entradas que desea.
 #### 1.- Acceder al listado de eventos
 
 Para acceder a este listado habria que ira a `/order/events`
@@ -106,7 +107,61 @@ Si no estamos seguros el panel se puede volver a reducir o bién podemos finaliz
 #### 6.- Si la petición es correcta, la API devolverá un objeto de tipo Order, con un conjunto de lineas que corresponden a los Ticket seleccionados.
 Al pulsar el botón de `CONFIRM` se hace un `POST` a la url `/order/confirm`.
 Esta acción obtiene la información recibida y la ormatea para crear el pedido a través del API.
-Lamentablemente no he sido c
+Lamentablemente no he sido capaz de formatear correctamente los datos requeridos por el API puesto, y pese que me devuelve un código `200` como que no ha habido problema no me devuelve ningún pedido.
+#### 7.- El Order y sus OrderLine, tienen una propiedad uuid. Se deberá generar tantos códigos aleatorios como entradas haya comprado el usuario.
+Una vez obtengamos el orden el servicio genera un código `JWT` con toda la información requerida y con un tiempo de caducidad de un año.
+#### 8.- Enviar un email al usuario con los códigos generados.
+Esta información se le envía al cliente mediante `swifmailer`, se ha configurado para salir a través del protocomo `smtp` de gmail con una cuenta de correo creada expresamente.
+![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/email.png?raw=true)
+Una vez realizada esta acción el sitio se redirije a `/order/confirmed` para evitar realizar otro post al recargar la pantalla y para ofrecer la información resumida del pedido al cliente.
+
+### Crear una API
+Hay que desarrollar una pequeña API para la comprobación de los códigos de entradas que se han emitido previamente.
+
+#### 1.- La API tendrá un web service que recibirá un código de entrada (por ejemplo: 1234567890asdfghjkl).
+
+La `url` de entrada del `api` tiene el prefijo `api`, precedido del prefijo anterior `order`.
+Para la llamada al método requerido se ha utilizado la ruta `/order/api/verify` que espera un parámetro `code` para ser validado.
+
+Un ejemplo de llamada podría ser:
+```sh
+http://eata.com/order/api/verify?code=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwib3JkZXJMaW5lIjoyLCJ0aWNrZXQiOjMsImlhdCI6MTU0MjI4MzkwMCwiZXhwIjoxNTczODE5OTAwfQ.ONHmwSPOSfTfWTPxyfu64Q6FYg0jGRueHwWb95O_zV8
+```
+#### 2.- Se comprueba si el código es correcto, y si ha sido usado previamente o no.
+De nuevo mediante `JWT` se verifica si el código introducido es correcto o no.
+Este método es capaz de obtener la información requerida directamente del código sin necesidad de acceder a base de datos, otorgando así un plus de rendimiento y velocidad.
+Además ofrece garantias de cifrado y expiración de código que también son verificadas.
+Para saber si el código ha sido utilizado o no se consulta a la base de datos no relacional `REDIS` porque no se requiere mas información que la fecha de uso y porque la velocidad que ofrece este sistema es sustancialmente mayor a otros.
+En el caso de que el código sea correcto se extrae la información del mismo y se presenta mediante un `JSON` y se introduce el valor del código en la base de datos con la fecha de uso para que no pueda ser utilizada de nuevo.
+#### 3.- En caso de una entrada ya utilizada o incorrecta, se devuelve un error con el motivo y el número de pedido, así como la hora de uso, si corresponde.
+El servicio creado incorpora varias clases que heredan de `Exception` para personalizar los distintos casos de error.
+| class | Description | Error Msg |
+| ------ | ------ | ----- |
+| ApiCodeValidationError | Excepción que se lanza si se ha prducido un error de validación de código o este está caducado | Invalid Code
+|ApiCodeUsedError| Excepción producida por un código en uso| Used Code
+
+Estas excepciones son lanzadas y capturadas para presentar al consumidor del `API` un mensaje de error acorde a lo sucedido.
+```sh
+{"error":true,"msg":"Invalid Code"}
+```
+En el caso de que se produzca cualquier otro tipo de error también se presentará debidamente.
+
+```sh
+{"error":true,"msg":"Unexpected Error"}
+```
+
+#### 4.- Si la entrada es correcta, devolverá el uuid del Order y el de su correspondiente OrderLine, así como el tipo de Ticket al que pertenece el código.
+En el caso de que el código sea correcto se ofrece la información obtenida.
+```sh
+{"error":false,"msg":{"order":"1","line":2,"ticket":3}}
+```
+
+### Tests
 
 
-http://eata:8888/app_dev.php/order/api/verify?code=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwib3JkZXJMaW5lIjoyLCJ0aWNrZXQiOjMsImlhdCI6MTU0MjI4MzkwMCwiZXhwIjoxNTczODE5OTAwfQ.ONHmwSPOSfTfWTPxyfu64Q6FYg0jGRueHwWb95O_zV8
+### Puntos de mejora de la prueba
+- Mejor diseño css o presentación mas elaborada
+- Mas test unitarios y funcionales
+- Mas control de errores y pantallas de error personalizadas
+- Validación de los camps introducidos
+- Uso de entidades para el pedido y sus lineas así como eventos y tickets.
