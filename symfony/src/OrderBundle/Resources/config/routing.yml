@@ -1,0 +1,26 @@
+order_homepage:
+    path:     /
+    defaults: { _controller: OrderBundle:Default:index }
+order_events:
+    path:     /events
+    defaults: { _controller: OrderBundle:Default:events }
+order_tickets:
+    path:     /tickets
+    defaults: { _controller: OrderBundle:Default:tickets }
+    options:
+      expose: true
+order_confirm:
+    path:     /confirm
+    defaults: { _controller: OrderBundle:Default:orderConfirm }
+    options:
+      expose: true
+order_confirmed:
+    path:     /confirmed
+    defaults: { _controller: OrderBundle:Default:orderConfirmed }
+api:
+    path:     /api
+    defaults: { _controller: OrderBundle:Api:index }
+api_verify:
+    path:     /api/verify
+    defaults: { _controller: OrderBundle:Api:codeVerify }
+    methods: [GET]

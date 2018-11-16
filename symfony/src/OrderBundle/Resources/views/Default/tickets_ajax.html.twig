@@ -1,0 +1,26 @@
+ {% for ticket in tickets %}
+ <div class="form-group row clearfix"  >
+
+
+  <div class='row'>
+        <div class='col-sm-4'>
+            <div class='form-group'>
+                <label>{{ ticket.name|e }}</label>
+
+            </div>
+        </div>
+        <div class='col-sm-4'>
+            <div class='form-group'>
+                <small class="form-text text-muted">{{ ticket.description|e }}</small>
+
+            </div>
+        </div>
+        <div class='col-sm-4'>
+            <div class='form-group'>
+            <input class="form-control" type="number" value="0" name="ticket_{{event_id}}_{{ticket.id}}" data-price="{{ ticket.price }}" data-event_id="{{ event_id }}" data-amount="0" data-total="0"  data-ticket_id="{{ ticket.id }}" onchange="sumAmount($(this))" ><span id="ticket_total_{{event_id}}_{{ticket.id}}">Precio {{ ticket.price }}€</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}

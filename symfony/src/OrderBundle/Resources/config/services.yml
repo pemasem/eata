@@ -1,0 +1,6 @@
+services:
+    ApiClient:
+        public: true;
+        class: OrderBundle\Services\ApiClient
+        arguments:
+            $key: 'FH6CRdypmWfNJGgHqqxdHw=='

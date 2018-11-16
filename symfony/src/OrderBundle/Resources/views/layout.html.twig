@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/order/css/order_bundle.css')}}" />
+{{ block("stylesheets", "base.html.twig") }}
+{% endblock %}
+{% block javascripts %}
+{{ block("javascripts", "base.html.twig") }}
+
+  <script type="text/javascript">
+  var URL_FOR_ORDER_TICKETS = '{{ (path('order_tickets')) }}';
+  </script>
+  <script type="text/javascript" src="{{asset('bundles/order/js/order_bundle.js')}}"></script>
+{% endblock %}
