@@ -10,10 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
-    {
-      return $this->render('@OrderBundle\Default\index.html.twig');
-    }
+ 
     public function eventsAction()
     {
       try{
@@ -90,7 +87,7 @@ class DefaultController extends Controller
         echo  $ex->getMessage();
         die();
       }
-    
+
         return $this->render('OrderBundle:Default:tickets_ajax.html.twig',array("tickets" => $tickets,"event_id" =>$event_id ));
 
 
