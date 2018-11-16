@@ -107,7 +107,7 @@ Si no estamos seguros el panel se puede volver a reducir o bién podemos finaliz
 
 #### 6.- Si la petición es correcta, la API devolverá un objeto de tipo Order, con un conjunto de lineas que corresponden a los Ticket seleccionados.
 Al pulsar el botón de `CONFIRM` se hace un `POST` a la url `/order/confirm`.
-Esta acción obtiene la información recibida y la ormatea para crear el pedido a través del API.
+Esta acción obtiene la información recibida y la formatea para crear el pedido a través del API.
 Lamentablemente no he sido capaz de formatear correctamente los datos requeridos por el API puesto, y pese que me devuelve un código `200` como que no ha habido problema no me devuelve ningún pedido.
 #### 7.- El Order y sus OrderLine, tienen una propiedad uuid. Se deberá generar tantos códigos aleatorios como entradas haya comprado el usuario.
 Una vez obtengamos el orden el servicio genera un código `JWT` con toda la información requerida y con un tiempo de caducidad de un año.
