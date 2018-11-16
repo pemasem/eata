@@ -81,17 +81,4 @@ assetic:
         cssrewrite: ~
 fos_rest:
     routing_loader:
-        default_format: json        
-fos_js_routing:
-    routes_to_expose: [ order_tickets ]
-fos_comment:
-    db_driver: orm
-    class:
-        model:
-            comment: MyProject\MyBundle\Entity\Comment
-            thread: MyProject\MyBundle\Entity\Thread
-fos_comment_api:
-    type: rest
-    resource: "@FOSCommentBundle/Resources/config/routing.yml"
-    prefix: /api_help
-    defaults: { _format: html }
+        default_format: json
