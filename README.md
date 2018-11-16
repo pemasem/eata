@@ -47,12 +47,13 @@ Se han requerido los siguientes pluguins.
 
 | Plugin |  | |
 | ------ | ------ | ------- |
-| Twig | [twig/twig] | motor de plantilla
-| Swiftmailer | [symfony/swiftmailer-bundle] | envio de correo electrónico
-| Bootstrap | [twitter/bootstrap] | diseño de sitios y aplicaciones web |
-| Predis | [predis/predis] | acceso a base de datos |
-| Jwt | [firebase/php-jwt] | estándar abierto basado en JSON propuesto por IETF para la creación de tokens
+| Twig | [twig/twig] | Motor de plantilla
+| Swiftmailer | [symfony/swiftmailer-bundle] | Envio de correo electrónico
+| Bootstrap | [twitter/bootstrap] | Diseño de sitios y aplicaciones web |
+| Predis | [predis/predis] | Acceso a base de datos |
+| Jwt | [firebase/php-jwt] | Estándar abierto basado en JSON propuesto por IETF para la creación de tokens
 | Unirest | [mashape/unirest-php] | Framework para realizar peticiones a webservice RESTfull
+|phpUnit|symfony/phpunit-bridge|Realización de tests
 
 
 ### Desarrollo
@@ -159,6 +160,10 @@ En el caso de que el código sea correcto se ofrece la información obtenida.
 
 ### Tests
 
+Para los test se han creado tanto Unitarios como funcionales en el propio proyecto de symfony.
+Se realiza el testeo mediante phpUnit con el comando `./vendor/bin/simple-phpunit` y se testea tanto el funcionamiento del API creada como el consumo del API de eventos, así como que todo aparece correctamente al usuario.
+
+![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/phpUnit.png?raw=true)
 
 ### Puntos de mejora de la prueba
 - Mejor diseño css o presentación mas elaborada
