@@ -137,10 +137,11 @@ Para saber si el código ha sido utilizado o no se consulta a la base de datos n
 En el caso de que el código sea correcto se extrae la información del mismo y se presenta mediante un `JSON` y se introduce el valor del código en la base de datos con la fecha de uso para que no pueda ser utilizada de nuevo.
 #### 3.- En caso de una entrada ya utilizada o incorrecta, se devuelve un error con el motivo y el número de pedido, así como la hora de uso, si corresponde.
 El servicio creado incorpora varias clases que heredan de `Exception` para personalizar los distintos casos de error.
+
 | class | Description | Error Msg |
 | ------ | ------ | ----- |
-| ApiCodeValidationError | Excepción que se lanza si se ha prducido un error de validación de código o este está caducado | Invalid Code
-|ApiCodeUsedError| Excepción producida por un código en uso| Used Code
+| ApiCodeValidationError | Excepción que se lanza si se ha prducido un error de validación de código o este está caducado | Invalid Code |
+|ApiCodeUsedError| Excepción producida por un código en uso| Used Code |
 
 Estas excepciones son lanzadas y capturadas para presentar al consumidor del `API` un mensaje de error acorde a lo sucedido.
 ```sh
