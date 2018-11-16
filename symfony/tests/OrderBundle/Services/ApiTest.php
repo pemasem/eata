@@ -20,7 +20,6 @@ class ApiTest extends KernelTestCase
         $order = (object) array('id' => '1','lines' => array((object)array("id" => 2,"ticket" => (object)array("id" => 3)),(object)array("id" => 4,"ticket" => (object)array("id" => 5))));
 
         $result = $this->api->generateCode($order);
-        dump(rawurlencode($order->lines[0]->code));
         $this->assertEquals(2, count($order->lines));
         $this->assertObjectHasAttribute('code', $order->lines[0]);
         $this->assertObjectHasAttribute('code', $order->lines[1]);

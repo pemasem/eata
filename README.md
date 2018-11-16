@@ -112,8 +112,9 @@ Lamentablemente no he sido capaz de formatear correctamente los datos requeridos
 Una vez obtengamos el orden el servicio genera un código `JWT` con toda la información requerida y con un tiempo de caducidad de un año.
 #### 8.- Enviar un email al usuario con los códigos generados.
 Esta información se le envía al cliente mediante `swifmailer`, se ha configurado para salir a través del protocomo `smtp` de gmail con una cuenta de correo creada expresamente.
-![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/email.png?raw=true)
 Una vez realizada esta acción el sitio se redirije a `/order/confirmed` para evitar realizar otro post al recargar la pantalla y para ofrecer la información resumida del pedido al cliente.
+
+![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/email.png?raw=true)
 
 ### Crear una API
 Hay que desarrollar una pequeña API para la comprobación de los códigos de entradas que se han emitido previamente.
