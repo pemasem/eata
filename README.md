@@ -160,9 +160,11 @@ En el caso de que el código sea correcto se ofrece la información obtenida.
 ```
 
 ### Tests
-
+Los tests se encuentran en `tests/OrderBundle`.
 Para los test se han creado tanto Unitarios como funcionales en el propio proyecto de symfony.
 Se realiza el testeo mediante phpUnit con el comando `./vendor/bin/simple-phpunit` y se testea tanto el funcionamiento del API creada como el consumo del API de eventos, así como que todo aparece correctamente al usuario.
+Por ejemplo se testea que el proceso que enera los códigos lo realiza correctamente.
+También nos sirve para generar códigos de prueba.
 
 ![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/phpUnit.png?raw=true)
 
@@ -173,3 +175,4 @@ Se realiza el testeo mediante phpUnit con el comando `./vendor/bin/simple-phpuni
 - Validación de los camps introducidos así como formateadores y placeholders
 - Uso de entidades para el pedido y sus lineas así como eventos y tickets.
 - Documentación y banco de pruebas del api online.
+- Poner algunas constantes en los ficers de configuración. Por ejemplo los datos de acceso de REDIS

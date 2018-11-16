@@ -141,28 +141,50 @@ class ApiClient{
     return $order;
   }
 
-  public function codeVerify($code){
+  /*
+  * Función que verifica el codigo introducido
+  * En caso de no ser un codigo válido lanzará una excepción del tipo ApiCodeValidationError
+  * En el caso de que el código ya ha sido usado lanzará una excepción del tipo ApiCodeUsedError
+  * En el caso de ser un codigo correcto y si su parámetro $consume == true se marcará el código como consumido
+  */
+  public function codeVerify($code, $consume = true){
     try{
+      //Verificamos la validez del código
       $order  = JWT::decode($code,$this->key,array('HS256'));
     }catch(\Exception $ex){
       throw new ApiCodeValidationError($code, $ex->getMessage());
     }
-
+    // Accedemos a la base de datos para ver si ha sido consumido
     $client = RedisAdapter::createConnection(
         'redis://localhost'
     );
-    $usage = $client->get("token_".base64_encode($code));
+    //Clave indice para buscar en base de datos
+    $key = "token_".base64_encode($code);
+    // Vemos si este código ha sido usado
+    $usage = $client->get($key);
     if(isset($usage)){
       throw new ApiCodeUsedError($order, $usage, $code);
-
-    }else{
-      $client->set("token_".base64_encode($code),date("Y-m-d H:i:s"));
+    }elseif($consume){
+      $client->set($key,date("Y-m-d H:i:s"));
+      // Marcamos la expiración de la clave como un año. Igual que la del código
+      // De este modo la base de datos se auto-regulara
+      // Pasado este periodo el código ya no serà vàlido
+      $client->EXPIRE($key,60*60*24*365);
     }
     return $order;
   }
 
 
 }
+
+/*
+* clase para indicar errores en el uso del API
+*/
+class ApiError extends \Exception{}
+
+/*
+* clase para indicar errores de validación de código
+*/
 class ApiCodeValidationError extends \Exception{
 
   private $token;
@@ -174,7 +196,10 @@ class ApiCodeValidationError extends \Exception{
     $this->token = $code;
   }
 }
-class ApiError extends \Exception{}
+
+/*
+* clase para indicar errores por codigo usado
+*/
 class ApiCodeUsedError extends \Exception{
   private $order;
   private $usage;
