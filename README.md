@@ -167,8 +167,9 @@ Se realiza el testeo mediante phpUnit con el comando `./vendor/bin/simple-phpuni
 ![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/phpUnit.png?raw=true)
 
 ### Puntos de mejora de la prueba
-- Mejor diseño css o presentación mas elaborada
+- Mejor diseño css, presentación mas elaborada, navegación
 - Mas test unitarios y funcionales
 - Mas control de errores y pantallas de error personalizadas
-- Validación de los camps introducidos
+- Validación de los camps introducidos así como formateadores y placeholders
 - Uso de entidades para el pedido y sus lineas así como eventos y tickets.
+- Documentación y banco de pruebas del api online.
