@@ -115,7 +115,7 @@ El pedido es guardado en una variable de sesión para ser recuperado desde las s
 #### 8.- Enviar un email al usuario con los códigos generados.
 Esta información se le envía al cliente mediante `swifmailer`, se ha configurado para salir a través del protocomo `smtp` de gmail con una cuenta de correo creada expresamente.
 Una vez realizada esta acción el sitio se redirije a `/order/confirmed` para evitar realizar otro post al recargar la pantalla y para ofrecer la información resumida del pedido al cliente.
-
+Esta pantalla hereda de la misma plantilla que se envia en el email para reutilizar código.
 ![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/email.png?raw=true)
 
 ### Crear una API

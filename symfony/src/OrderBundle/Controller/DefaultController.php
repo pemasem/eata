@@ -112,8 +112,7 @@ class DefaultController extends Controller
       //recogemos el pedido de la sesión
       $session = $request->getSession();
       $order =   $session->get('order');
-      dump($order);
-      die();
+   
       return $this->render('OrderBundle:Default:orderConfirmed.html.twig',array('order' => $order));
     }
 
