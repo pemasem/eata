@@ -111,6 +111,7 @@ Esta acción obtiene la información recibida y la formatea para crear el pedido
 Lamentablemente no he sido capaz de formatear correctamente los datos requeridos por el API puesto, y pese que me devuelve un código `200` como que no ha habido problema no me devuelve ningún pedido.
 #### 7.- El Order y sus OrderLine, tienen una propiedad uuid. Se deberá generar tantos códigos aleatorios como entradas haya comprado el usuario.
 Una vez obtengamos el orden el servicio genera un código `JWT` con toda la información requerida y con un tiempo de caducidad de un año.
+El pedido es guardado en una variable de sesión para ser recuperado desde las siguientes secciones.
 #### 8.- Enviar un email al usuario con los códigos generados.
 Esta información se le envía al cliente mediante `swifmailer`, se ha configurado para salir a través del protocomo `smtp` de gmail con una cuenta de correo creada expresamente.
 Una vez realizada esta acción el sitio se redirije a `/order/confirmed` para evitar realizar otro post al recargar la pantalla y para ofrecer la información resumida del pedido al cliente.

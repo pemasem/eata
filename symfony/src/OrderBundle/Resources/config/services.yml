@@ -4,3 +4,4 @@ services:
         class: OrderBundle\Services\ApiClient
         arguments:
             $key: 'FH6CRdypmWfNJGgHqqxdHw=='
+            $mailer: '@mailer'

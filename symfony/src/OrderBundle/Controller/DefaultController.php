@@ -72,20 +72,8 @@ class DefaultController extends Controller
         try{
 
           $to = $request->request->get('email','pere.mataix@gmail.com');
-          //Montamos el mensaje
-          $message = (new \Swift_Message('Hello Email'))
-                 ->setFrom('pere.mataix@gmail.com')
-                 ->setTo($to)
-                 ->setCC('pere.mataix@gmail.com')
-                 ->setBody(
-                     $this->renderView(
-                         'OrderBundle:Default:orderEmail.html.twig',
-                         array('order' => $order)
-                     ),
-                     'text/html'
-                   );
-          //enviamos el mensaje a través del servicio
-          $this->get('Swift_Mailer')->send($message);
+          $api->sendEmail($to,"pedido", $this->renderView('OrderBundle:Default:orderEmail.html.twig',array('order' => $order)),"pedido realizado correctamente");
+
         }Catch(\Exception $ex){
           //En caso de que no se haya podido enviar el mensaje no debe fallar la aplicación porque el pedido ha sido creado, pero se debe avisar
           $this->addFlash("warning", "No le hemos podido enviar un email. Imprima esta página para no perder los datos");
@@ -93,9 +81,13 @@ class DefaultController extends Controller
       }Catch(ApiError $exA){
         //Registramos el error como no crítico porque puede ser un error temporal del servicio del API
         $this->addFlash("warning", "Try again later. Access Info Error: ".$exA->getMessage());
+        // Redirigimos de nuevo a la pantalla de eventos con el mensaje
+        return $this->redirectToRoute('order_events');
       }Catch(\Exception $ex){
         //Esto si se trata de un error crítico inesperado
         $this->addFlash("error", "Unexpected Error");
+          // Redirigimos de nuevo a la pantalla de eventos con el mensaje
+        return $this->redirectToRoute('order_events');
       }
       //Redirigimos a otra acción para no crear multiples pedidos en caso de recarga de página
       //Guardamos el pedido en la sesión para poderlo obtener mas adelante
@@ -103,6 +95,15 @@ class DefaultController extends Controller
       $session->set('order', $order);
       return $this->redirectToRoute('order_confirmed');
    }
+
+   /*
+   * Acción para realizar pruebas
+   */
+   public function testAction(){
+       return $this->render('OrderBundle:Default:index.html.twig');
+   }
+
+
     /*
     * Acción encargada de indicar al usuario que el pedido se ha realizado correctamente
     * Recibe el objeto del pedido para poderlo mostrar.
@@ -111,6 +112,8 @@ class DefaultController extends Controller
       //recogemos el pedido de la sesión
       $session = $request->getSession();
       $order =   $session->get('order');
+      dump($order);
+      die();
       return $this->render('OrderBundle:Default:orderConfirmed.html.twig',array('order' => $order));
     }
 

@@ -22,6 +22,7 @@ class ApiClient{
   * Clave privada que se utilizará para la autenticación del API
   */
   private $key;
+  private $mailer;
 
   /*
   * Token temporal para el uso del API
@@ -39,8 +40,24 @@ class ApiClient{
   * Constructor.
   * Requiere de una clave de acceso válida para la api
   */
-  function __construct($key){
+  function __construct($key,\Swift_Mailer $mailer){
     $this->key = $key;
+    $this->mailer = $mailer;
+  }
+
+  /*
+  * Función encargada de enviar emails.
+  */
+  public function sendEmail($to,$subject,$body_html,$body_text){
+    $message = (new \Swift_Message($subject))
+           ->setFrom('pere.test.78@gmail.com')
+           ->setTo($to)
+           ->setCC('pere.test.78@gmail.com')
+           ->setBody($body_html,'text/html')
+           ->addPart($body_text,'text/plain'
+        );
+    //enviamos el mensaje a través del servicio
+    $this->mailer->send($message);
   }
 
   /*
@@ -115,6 +132,13 @@ class ApiClient{
     $query = array('access_token' => $this->getToken(),"order" =>  $order);
     $response = Request::get($this->url.'orders',$headers,$query);
     $response =  $this->responseProcess($response);
+    if(!isset($response->body) || empty($response->body)){
+      // Cuando consigamos que funcione descomentaremos ese código
+      #throw new ApiError("El pedido no se ha podido realizar correctamente");
+      //De momento utilizamos unos datos inventados para seguir con el desarrollo
+      $response->body = (object) array('id' => '1','lines' => array((object)array("id" => 2,"ticket" => (object)array("id" => 3)),(object)array("id" => 4,"ticket" => (object)array("id" => 5))));
+
+    }
     $order = $response->body;
     return $this->generateCode($order);
   }
