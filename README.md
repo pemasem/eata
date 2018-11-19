@@ -178,6 +178,6 @@ Para el API se ha creado la ruta `api/doc` donde hay un sandbox de prueba y la d
 - Mas control de errores y pantallas de error personalizadas
 - Validación de los campos introducidos así como formateadores y placeholders
 - Uso de entidades para el pedido y sus lineas así como eventos y tickets.
-- Quitar el area de DEFAUL de la documentación del API.
+- Quitar el area de DEFAULT de la documentación del API.
 - Poner algunas constantes en los ficheros de configuración. Por ejemplo los datos de acceso de REDIS
 - Sacar Informacion del usuario en el email enviado
