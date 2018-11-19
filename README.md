@@ -171,7 +171,7 @@ También nos sirve para generar códigos de prueba.
 ![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/phpUnit.png?raw=true)
 
 Para el API se ha creado la ruta `api/doc` donde hay un sandbox de prueba y la documentación
-
+![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/api.png?raw=true)
 ### Puntos de mejora de la prueba
 - Mejor diseño css, presentación mas elaborada, navegación
 - Mas test unitarios y funcionales
