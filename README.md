@@ -54,6 +54,7 @@ Se han requerido los siguientes pluguins.
 | Jwt | [firebase/php-jwt] | Estándar abierto basado en JSON propuesto por IETF para la creación de tokens
 | Unirest | [mashape/unirest-php] | Framework para realizar peticiones a webservice RESTfull
 |phpUnit|symfony/phpunit-bridge|Realización de tests
+|Nelmioapidocbundle|nelmio/api-doc-bundle|Documentación y banco de prueba del API
 
 
 ### Desarrollo
@@ -169,11 +170,14 @@ También nos sirve para generar códigos de prueba.
 
 ![N|Solid](https://github.com/pemasem/eata/blob/master/symfony/src/OrderBundle/Resources/doc/phpUnit.png?raw=true)
 
+Para el API se ha creado la ruta `api/doc` donde hay un sandbox de prueba y la documentación
+
 ### Puntos de mejora de la prueba
 - Mejor diseño css, presentación mas elaborada, navegación
 - Mas test unitarios y funcionales
 - Mas control de errores y pantallas de error personalizadas
-- Validación de los camps introducidos así como formateadores y placeholders
+- Validación de los campos introducidos así como formateadores y placeholders
 - Uso de entidades para el pedido y sus lineas así como eventos y tickets.
-- Documentación y banco de pruebas del api online.
-- Poner algunas constantes en los ficers de configuración. Por ejemplo los datos de acceso de REDIS
+- Quitar el area de DEFAUL de la documentación del API.
+- Poner algunas constantes en los ficheros de configuración. Por ejemplo los datos de acceso de REDIS
+- Sacar Informacion del usuario en el email enviado

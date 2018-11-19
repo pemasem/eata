@@ -24,6 +24,7 @@ class ApiTest extends KernelTestCase
 
         //lamamos al método
         $result = $this->api->generateCode($order);
+        dump($result);
         //Esperamos quese sigan manteniendo las dos líneas del pedido
         $this->assertEquals(2, count($order->lines));
         //Verificamos que se haya añadido un nuevo campo "code"
